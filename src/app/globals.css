@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Chrome Window Styles */
 :root {
   --chrome-gray: #f1f3f4;
@@ -20,8 +25,10 @@
   top: 0;
   left: 0;
   font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* Window Title Bar */
 .window-title-bar {
   height: 32px;
   background-color: #f5f5f5;
@@ -55,9 +62,7 @@
   justify-content: center;
   cursor: pointer;
   color: var(--chrome-dark-gray);
-  font-size: 14px;
   transition: background-color 0.2s;
-  font-weight: bold;
 }
 
 .window-control:hover {
@@ -69,6 +74,7 @@
   color: white;
 }
 
+/* Chrome Top Bar */
 .chrome-top-bar {
   height: 56px;
   background-color: var(--chrome-gray);
@@ -79,6 +85,7 @@
   border-bottom: 1px solid var(--chrome-border);
 }
 
+/* Tabs */
 .chrome-tabs {
   display: flex;
   height: 100%;
@@ -107,7 +114,7 @@
   margin-right: 4px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 12px;
   font-size: 13px;
   color: var(--chrome-dark-gray);
   cursor: pointer;
@@ -117,6 +124,7 @@
   transition: all 0.2s ease;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
   font-weight: 500;
+  transform-origin: left center;
 }
 
 .chrome-tab.active {
@@ -133,23 +141,30 @@
 
 .tab-favicon {
   margin-right: 8px;
-  font-weight: bold;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
 }
 
 .tab-close {
   margin-left: 8px;
-  padding: 0 4px;
+  padding: 2px;
   border-radius: 50%;
-  font-weight: bold;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
 }
 
 .chrome-tab:hover .tab-close {
   opacity: 1;
 }
 
+.tab-close:hover {
+  transform: scale(1.1);
+  background-color: rgba(0,0,0,0.1);
+}
+
+/* Address Bar */
 .chrome-address-bar {
   flex-grow: 1;
   height: 32px;
@@ -166,13 +181,7 @@
   font-weight: 500;
 }
 
-.chrome-address-bar::before {
-  content: '🔒';
-  margin-right: 8px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
+/* Icons */
 .chrome-icon {
   width: 24px;
   height: 24px;
@@ -181,60 +190,71 @@
   justify-content: center;
   color: var(--chrome-dark-gray);
   cursor: pointer;
-  font-size: 16px;
   border-radius: 50%;
-  transition: background-color 0.2s;
-  font-weight: bold;
+  transition: all 0.2s ease;
 }
 
 .chrome-icon:hover {
   background-color: rgba(0,0,0,0.08);
 }
 
+/* Content Area */
 .chrome-content {
   flex-grow: 1;
   background-color: white;
   display: flex;
-  align-items: center;
-  justify-content: center;
   color: var(--chrome-dark-gray);
   font-size: 14px;
   overflow: auto;
+  position: relative;
 }
 
-/* New chat button */
-.new-chat-button {
-  background-color: var(--chrome-blue);
-  color: white;
-  border: none;
-  border-radius: 16px;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 16px;
-  transition: background-color 0.2s;
+/* Content Animations */
+.slide-in-left {
+  animation: slideInLeft 0.3s ease-out forwards;
 }
 
-.new-chat-button:hover {
-  background-color: #1a5fba;
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out forwards;
 }
 
-.new-chat-icon {
-  font-weight: bold;
+@keyframes slideInLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-/* Tab animations */
-@keyframes tabSwitch {
-  from { transform: translateY(2px); opacity: 0.9; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes slideInRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Tab Animations */
+@keyframes tabActive {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .chrome-tab.active {
-  animation: tabSwitch 0.15s ease-out;
+  animation: tabActive 0.2s ease-out;
 }
 
 /* Toolbar divider */
@@ -256,6 +276,11 @@
   align-items: center;
   padding: 0 16px;
   box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+  transition: box-shadow 0.2s;
+}
+
+.google-search:hover {
+  box-shadow: 0 2px 8px rgba(32,33,36,0.3);
 }
 
 .google-search-input {
@@ -266,31 +291,64 @@
   margin: 0 8px;
 }
 
-.google-search-icon {
-  color: var(--chrome-dark-gray);
-  font-weight: bold;
-}
-
-/* Numbered list */
-.numbered-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.numbered-item {
+/* New chat button */
+.new-chat-button {
+  background-color: var(--chrome-blue);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: var(--chrome-dark-gray);
+  transition: all 0.2s ease;
 }
 
-.numbered-item::before {
-  content: attr(data-number);
-  font-weight: bold;
-  color: var(--chrome-blue);
+.new-chat-button:hover {
+  background-color: #1a5fba;
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chrome-tab {
+    min-width: 120px;
+    padding: 0 8px;
+  }
+  
+  .tab-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80px;
+  }
+  
+  .google-search {
+    width: 90%;
+  }
+  
+  .chrome-address-bar {
+    display: none;
+  }
+  
+  .toolbar-divider {
+    margin: 0 4px;
+  }
+}
+
+/* Loading animation for refresh */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.refreshing {
+  animation: spin 1s linear infinite;
 }
