@@ -78,14 +78,12 @@ export default function ChromeWindow() {
   }, [tabs]);
 
   useEffect(() => {
-    // Reset animation direction after transition completes
-    if (contentRef.current) {
+    const contentElement = contentRef.current;
+    if (contentElement) {
       const handleAnimationEnd = () => setDirection(null);
-      contentRef.current.addEventListener('animationend', handleAnimationEnd);
+      contentElement.addEventListener('animationend', handleAnimationEnd);
       return () => {
-        if (contentRef.current) {
-          contentRef.current.removeEventListener('animationend', handleAnimationEnd);
-        }
+        contentElement.removeEventListener('animationend', handleAnimationEnd);
       };
     }
   }, [activeTab]);
@@ -132,7 +130,7 @@ export default function ChromeWindow() {
                 Google Search
               </button>
               <button className="px-4 py-2 bg-gray-100 rounded text-sm hover:shadow">
-                I'm Feeling Lucky
+                I&apos;m Feeling Lucky
               </button>
             </div>
           </div>
