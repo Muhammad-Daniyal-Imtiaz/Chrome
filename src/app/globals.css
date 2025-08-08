@@ -169,7 +169,7 @@
   animation: tabSwitch 0.2s ease-out;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 900px) {
   .chrome-window {
     width: 95%;
