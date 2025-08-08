@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Chrome Window Styles */
+.chrome-window {
+  width: 800px;
+  height: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  position: relative;
+  margin: 50px auto;
+  border: 1px solid #d0d0d0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.chrome-window.maximized {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.window-title-bar {
+  height: 28px;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid #e0e0e0;
+  user-select: none;
+}
+
+.window-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.window-control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.window-control.minimize {
+  background-color: #ffbd2e;
+  border: 1px solid #e1a116;
+}
+
+.window-control.maximize {
+  background-color: #28c940;
+  border: 1px solid #12ac28;
+}
+
+.window-control.close {
+  background-color: #ff5f56;
+  border: 1px solid #e0443e;
+}
+
+.chrome-top-bar {
+  height: 40px;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.chrome-tabs {
+  display: flex;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.chrome-tab {
+  height: 100%;
+  min-width: 120px;
+  max-width: 240px;
+  background-color: #e8e8e8;
+  border-radius: 8px 8px 0 0;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 12px;
+  color: #333;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #d0d0d0;
+  border-bottom: none;
+  transition: all 0.2s ease;
+}
+
+.chrome-tab.active {
+  background-color: white;
+  z-index: 1;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.chrome-tab:not(.active):hover {
+  background-color: #f0f0f0;
+}
+
+.chrome-tab::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+}
+
+.chrome-address-bar {
+  flex-grow: 1;
+  height: 24px;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 11px;
+  color: #555;
+  margin: 0 8px;
+}
+
+.chrome-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.chrome-icon:hover {
+  color: #333;
+}
+
+.chrome-content {
+  flex-grow: 1;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Animations */
+@keyframes tabSwitch {
+  from { opacity: 0.8; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chrome-tab.active {
+  animation: tabSwitch 0.2s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .chrome-window {
+    width: 95%;
+    height: 80vh;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  
+  .chrome-tab {
+    min-width: 80px;
+  }
 }
